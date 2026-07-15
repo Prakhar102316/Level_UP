@@ -6,10 +6,8 @@ Instead of only tracking workouts, the app gives the user XP, levels, ranks, str
 
 ## Live App
 
-After deploying with GitHub Pages, add your live link here:
-
 ```text
-https://your-username.github.io/level-up/
+https://prakhar102316.github.io/Level_Up/
 ```
 
 ## What The App Does
