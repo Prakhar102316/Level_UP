@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#101820" />
+    <meta name="description" content="LEVEL UP is a real-life RPG fitness tracker." />
+    <link rel="manifest" href="./manifest.webmanifest" />
+    <link rel="icon" href="./assets/icon-192.png" />
+    <link rel="apple-touch-icon" href="./assets/icon-192.png" />
+    <link rel="stylesheet" href="./styles.css" />
+    <title>LEVEL UP</title>
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">Career Mode</p>
+          <h1>LEVEL UP</h1>
+        </div>
+        <button class="install-button" id="installButton" hidden>Install</button>
+      </header>
+
+      <section class="day-timer" aria-label="Time left today">
+        <span>Day ends in</span>
+        <strong id="dayTimer">24:00:00</strong>
+      </section>
+
+      <section class="hero-panel">
+        <div>
+          <p class="muted">Player</p>
+          <h2 id="playerName">Partner</h2>
+          <p id="rankLine">Level 1 · Sunday League</p>
+        </div>
+        <div class="level-disc">
+          <strong id="levelNumber">1</strong>
+          <span>LVL</span>
+        </div>
+      </section>
+
+      <section class="xp-panel">
+        <div class="row">
+          <strong>XP Progress</strong>
+          <span id="xpLabel">0 / 500</span>
+        </div>
+        <div class="bar"><span id="xpBar"></span></div>
+      </section>
+
+      <nav class="tabs" aria-label="App sections">
+        <button class="tab active" data-screen="home">Quests</button>
+        <button class="tab" data-screen="stats">Stats</button>
+        <button class="tab" data-screen="workouts">Workout</button>
+        <button class="tab" data-screen="meals">Meals</button>
+        <button class="tab" data-screen="progress">Progress</button>
+        <button class="tab" data-screen="settings">Settings</button>
+      </nav>
+
+      <section class="screen active" id="home">
+        <div class="metric-grid">
+          <article><strong id="totalXp">0</strong><span>Total XP</span></article>
+          <article><strong id="streak">0</strong><span>Streak</span></article>
+          <article><strong id="todayXp">0</strong><span>Today XP</span></article>
+          <article><strong id="badgeCount">0</strong><span>Badges</span></article>
+        </div>
+
+        <div class="section-heading">
+          <h3>Today's Quests</h3>
+          <span id="questCount">0 / 6</span>
+        </div>
+        <div class="quest-list" id="questList"></div>
+
+        <article class="custom-card">
+          <h3>Add Personal Quest</h3>
+          <form id="customQuestForm" class="compact-form">
+            <input id="customQuestTitle" placeholder="No sugar, study, stretching..." required />
+            <select id="customQuestDifficulty">
+              <option value="easy">Easy +20 XP</option>
+              <option value="medium" selected>Medium +50 XP</option>
+              <option value="hard">Hard +100 XP</option>
+            </select>
+            <button class="wide-button" type="submit">Add Quest</button>
+          </form>
+        </article>
+
+        <article class="boss-card">
+          <div class="row">
+            <strong>Weekly Boss: Laziness</strong>
+            <span id="bossHp">100 HP</span>
+          </div>
+          <div class="bar danger"><span id="bossBar"></span></div>
+          <p>Gym check-ins damage this week's boss. Every new week, the boss resets to 100 HP.</p>
+        </article>
+
+        <button class="wide-button" id="newDayButton">Manual New Day</button>
+      </section>
+
+      <section class="screen" id="stats">
+        <div class="profile-card">
+          <div class="avatar">LU</div>
+          <label>
+            Player name
+            <input id="nameInput" maxlength="20" />
+          </label>
+          <button class="wide-button" id="saveNameButton">Save Player</button>
+        </div>
+
+        <div class="section-heading">
+          <h3>Character Stats</h3>
+        </div>
+        <div id="statList"></div>
+
+        <article class="tree-card">
+          <strong>Skill Tree</strong>
+          <div class="tree-root">Strength</div>
+          <div class="tree-branches">
+            <span>Endurance</span>
+            <span>Power</span>
+            <span>Recovery</span>
+          </div>
+        </article>
+      </section>
+
+      <section class="screen" id="workouts">
+        <form class="workout-form" id="workoutForm">
+          <label>
+            Exercise
+            <input id="exerciseName" placeholder="Bench press" required />
+          </label>
+          <div class="three-col">
+            <label>
+              Weight
+              <input id="exerciseWeight" inputmode="numeric" placeholder="40" />
+            </label>
+            <label>
+              Reps
+              <input id="exerciseReps" inputmode="numeric" placeholder="8" />
+            </label>
+            <label>
+              Sets
+              <input id="exerciseSets" inputmode="numeric" placeholder="3" />
+            </label>
+          </div>
+          <button class="wide-button" type="submit">Log Workout +80 XP</button>
+        </form>
+
+        <article class="mood-card">
+          <h3>Daily Energy</h3>
+          <div class="mood-grid">
+            <button type="button" data-mood="Low">Low</button>
+            <button type="button" data-mood="Okay">Okay</button>
+            <button type="button" data-mood="Strong">Strong</button>
+          </div>
+          <p id="moodToday">No mood logged today.</p>
+        </article>
+
+        <div class="section-heading">
+          <h3>Workout Log</h3>
+          <span id="workoutCount">0 entries</span>
+        </div>
+        <div id="workoutList" class="workout-list"></div>
+      </section>
+
+      <section class="screen" id="meals">
+        <form class="meal-form" id="mealForm">
+          <label>
+            Meal name
+            <input id="mealName" placeholder="Paneer bowl" required />
+          </label>
+          <div class="two-col">
+            <label>
+              Calories
+              <input id="mealCalories" inputmode="numeric" placeholder="450" />
+            </label>
+            <label>
+              Protein
+              <input id="mealProtein" inputmode="numeric" placeholder="32g" />
+            </label>
+          </div>
+          <button class="wide-button" type="submit">Log Meal +40 XP</button>
+        </form>
+
+        <article class="water-card">
+          <div class="row">
+            <strong>Water Goal</strong>
+            <span id="waterLabel">0 / 3000 ml</span>
+          </div>
+          <div class="bar blue"><span id="waterBar"></span></div>
+          <div class="two-col">
+            <button id="water250" type="button">+250 ml</button>
+            <button id="water500" type="button">+500 ml</button>
+          </div>
+        </article>
+
+        <div class="section-heading">
+          <h3>Recent Meals</h3>
+        </div>
+        <div id="mealList" class="meal-list"></div>
+      </section>
+
+      <section class="screen" id="progress">
+        <div class="section-heading">
+          <h3>Last 30 Days</h3>
+        </div>
+        <div class="chart" id="chart"></div>
+
+        <div class="section-heading">
+          <h3>Inventory</h3>
+        </div>
+        <div id="badgeList"></div>
+
+        <div class="section-heading">
+          <h3>Titles</h3>
+          <span id="activeTitle">Rookie</span>
+        </div>
+        <div id="titleList" class="title-list"></div>
+
+        <article class="season-card">
+          <h3 id="seasonName">Current Season</h3>
+          <div class="metric-grid season-grid">
+            <article><strong id="seasonXp">0</strong><span>Season XP</span></article>
+            <article><strong id="seasonWorkouts">0</strong><span>Workouts</span></article>
+            <article><strong id="seasonMeals">0</strong><span>Meals</span></article>
+            <article><strong id="seasonMood">-</strong><span>Last Mood</span></article>
+          </div>
+        </article>
+      </section>
+
+      <section class="screen" id="settings">
+        <article class="settings-card">
+          <h3>Progress Controls</h3>
+          <p>
+            The app automatically starts a new day after midnight and resets the boss every week.
+            Use these controls only if you tapped something by mistake or want to start fresh.
+          </p>
+          <button class="wide-button secondary" id="undoDayButton" type="button">
+            Undo Last New Day
+          </button>
+          <button class="wide-button danger-button" id="resetButton" type="button">
+            Reset All Progress
+          </button>
+        </article>
+      </section>
+    </main>
+
+    <script src="./app.js"></script>
+  </body>
+</html>
